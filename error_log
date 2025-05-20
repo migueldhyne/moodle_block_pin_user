@@ -1,0 +1,16 @@
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge1_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 35
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge1_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 37
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge2_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 39
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge2_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 41
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge1_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 46
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge1_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 47
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge2_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 54
+[20-May-2025 00:54:33 Europe/Paris] PHP Warning:  Undefined variable $badge2_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 55
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge1_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 35
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge1_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 37
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge2_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 39
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge2_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 41
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge1_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 46
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge1_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 47
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge2_bg in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 54
+[20-May-2025 00:55:55 Europe/Paris] PHP Warning:  Undefined variable $badge2_color in /home/studeoed/schools/demo/demo.studeo.education/moodle42/blocks/pin_user/css.php on line 55

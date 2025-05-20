@@ -1,0 +1,16 @@
+.custom-badge1 {
+    background-color: #229900;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+.custom-badge2 {
+    background-color: #5cb3ff;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
