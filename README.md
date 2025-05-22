@@ -66,4 +66,4 @@ The **Pin User Block** plugin displays customizable badges next to user names on
 
 ## License
 
-This plugin is released under the [GNU GPL v3+](LICENSE). See the `LICENSE` file for full details.
+This plugin is released under the Creative Commons BY-NC-SA 4.0. See the `LICENSE` file for full details.
