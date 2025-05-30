@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Block plugin to display pinned user information on the course participants page.
  *
@@ -85,7 +83,7 @@ class block_pin_user extends block_base {
         // Load the CSS file for styling the badge.
         $this->page->requires->css(new moodle_url('/blocks/pin_user/css.php'));
 
-        // === Pagination parameters ===
+        // Pagination parameters.
         $page    = optional_param('page', 0, PARAM_INT);
         $perpage = 25;
 
@@ -120,7 +118,7 @@ class block_pin_user extends block_base {
             'courseid'      => required_param('id', PARAM_INT),
         ];
 
-        // === Count total participants for paging ===
+        // Count total participants for paging.
         $countsql = "SELECT COUNT(DISTINCT u.id)
                      FROM {user} u
                      LEFT JOIN {user_info_data} udf1
@@ -139,7 +137,7 @@ class block_pin_user extends block_base {
 
         $totalcount = $DB->count_records_sql($countsql, $params);
 
-        // === Fetch only the current page ===
+        // Fetch only the current page.
         $participants = $DB->get_records_sql(
             $sql,
             $params,

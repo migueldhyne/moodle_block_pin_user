@@ -24,8 +24,6 @@
 
 namespace block_pin_user\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy provider for the Pin User block.
  *
