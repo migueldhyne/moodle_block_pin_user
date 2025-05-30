@@ -15,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Block definition class for the block_pluginname plugin.
+ * Block definition class for the block_pin_user plugin.
  *
  * @package   block_pin_user
  * @copyright 2025, Miguël Dhyne <miguel.dhyne@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -38,9 +37,6 @@ class block_pin_user extends block_base {
     /**
      * Initializes the block's title using the localized plugin name.
      *
-     * This method is called when the block is constructed and sets the title
-     * shown in the block header.
-     *
      * @return void
      */
     public function init() {
@@ -55,34 +51,33 @@ class block_pin_user extends block_base {
     public function has_config() {
         return true;
     }
+
     /**
      * Generates the content of the block to be displayed on the participants page.
      *
      * The content is only shown if the user has the 'moodle/course:manageactivities' capability
      * and if the current page is the course participants page.
-     * It displays a list of participants with custom badges based on two user profile fields.
+     * It displays a paginated list of participants with custom badges based on two user profile fields.
      *
      * @return stdClass|null Object containing the HTML content to display, or null if not applicable.
      */
     public function get_content() {
-        global $DB, $COURSE, $USER;
+        global $DB, $COURSE, $USER, $OUTPUT;
 
         // Ensure content is only generated once.
         if ($this->content !== null) {
             return $this->content;
         }
 
-        // Check if the user has the capability to manage activities in the course (which teachers typically have).
+        // Check capability.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))) {
-            // If the user does not have the required capability, do not show the block.
             $this->content = null;
             return $this->content;
         }
 
-        // Check if the current page is the Participants page.
+        // Check for participants page.
         if ($this->page->pagetype !== 'course-participants'
-        && !$this->page->url->compare(new moodle_url('/user/index.php'), URL_MATCH_BASE)) {
-            // If it's not the participants page, don't render any content.
+            && !$this->page->url->compare(new moodle_url('/user/index.php'), URL_MATCH_BASE)) {
             $this->content = null;
             return $this->content;
         }
@@ -90,17 +85,15 @@ class block_pin_user extends block_base {
         // Load the CSS file for styling the badge.
         $this->page->requires->css(new moodle_url('/blocks/pin_user/css.php'));
 
-        // Initialize content as an empty object.
-        $this->content = new stdClass();
+        // === Pagination parameters ===
+        $page    = optional_param('page', 0, PARAM_INT);
+        $perpage = 25;
 
-        // Get the block renderer.
-        $renderer = $this->page->get_renderer('block_pin_user');
-
-        // Retrieve user profile fields from the administrator settings.
+        // Retrieve profile-field settings.
         $profilefield1 = get_config('block_pin_user', 'profilefield1');
         $profilefield2 = get_config('block_pin_user', 'profilefield2');
 
-        // Create the SQL query using the parameter values.
+        // Base SQL to fetch participants + custom field values.
         $sql = "SELECT DISTINCT
                     u.id, u.firstname, u.lastname, u.email, u.firstnamephonetic, u.lastnamephonetic, u.middlename,
                     u.alternatename,
@@ -118,32 +111,55 @@ class block_pin_user extends block_base {
                 JOIN {enrol} e
                     ON ue.enrolid = e.id
                 WHERE
-                    u.deleted = 0 AND e.courseid = :courseid";
+                    u.deleted = 0
+                    AND e.courseid = :courseid";
 
-        // Retrieve the courseid from the URL parameters.
-        $courseid = required_param('id', PARAM_INT);
-
-        // Parameters for the SQL query.
         $params = [
-            'profilefield1' => $profilefield1, // Dynamically provided field name for profilefield1.
-            'profilefield2' => $profilefield2, // Dynamically provided field name for profilefield2.
-            'courseid' => $courseid,           // Course ID from the URL parameters.
+            'profilefield1' => $profilefield1,
+            'profilefield2' => $profilefield2,
+            'courseid'      => required_param('id', PARAM_INT),
         ];
 
-        // Execute the SQL query.
-        $participants = $DB->get_records_sql($sql, $params);
+        // === Count total participants for paging ===
+        $countsql = "SELECT COUNT(DISTINCT u.id)
+                     FROM {user} u
+                     LEFT JOIN {user_info_data} udf1
+                         ON u.id = udf1.userid
+                         AND udf1.fieldid = (SELECT id FROM {user_info_field} WHERE shortname = :profilefield1)
+                     LEFT JOIN {user_info_data} udf2
+                         ON u.id = udf2.userid
+                         AND udf2.fieldid = (SELECT id FROM {user_info_field} WHERE shortname = :profilefield2)
+                     JOIN {user_enrolments} ue
+                         ON u.id = ue.userid
+                     JOIN {enrol} e
+                         ON ue.enrolid = e.id
+                     WHERE
+                         u.deleted = 0
+                         AND e.courseid = :courseid";
 
-        // Initialize an empty string for the content.
-        $content = '';
+        $totalcount = $DB->count_records_sql($countsql, $params);
 
-        // Loop through each participant and render their name with the EBS badge.
+        // === Fetch only the current page ===
+        $participants = $DB->get_records_sql(
+            $sql,
+            $params,
+            $page * $perpage,
+            $perpage
+        );
+
+        // Prepare renderer and paging controls.
+        $renderer = $this->page->get_renderer('block_pin_user');
+        $baseurl  = $this->page->url;
+        $paging   = $OUTPUT->paging_bar($totalcount, $page, $perpage, $baseurl);
+
+        // Build content.
+        $this->content        = new stdClass();
+        $this->content->text  = $paging;
         foreach ($participants as $participant) {
-            $content .= $renderer->render_participant_with_pin($participant);
+            $this->content->text .= $renderer->render_participant_with_pin($participant);
         }
+        $this->content->text .= $paging;
 
-        // Assign the generated content.
-        $this->content->text = $content;
         return $this->content;
-
     }
 }

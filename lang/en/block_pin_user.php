@@ -64,3 +64,4 @@ $string['text1']                      = 'Text 1';
 $string['text1_desc']                 = 'Enter the value for Text 1.';
 $string['text2']                      = 'Text 2';
 $string['text2_desc']                 = 'Enter the value for Text 2.';
+$string['privacy:metadata']           = 'The Pin User block does not store any personal data.';

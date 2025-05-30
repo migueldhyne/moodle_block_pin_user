@@ -55,7 +55,8 @@ class block_pin_user_renderer extends plugin_renderer_base {
         $fullname = html_writer::link($profileurl, fullname($user));
 
         // Start HTML block.
-        $html = html_writer::start_tag('div', ['class' => 'participant-name']);
+        $html = html_writer::start_tag('div', ['class' => 'block_pin_user participant-name']);
+
         $html .= ' ' . $fullname;
 
         // Get plugin configuration.
